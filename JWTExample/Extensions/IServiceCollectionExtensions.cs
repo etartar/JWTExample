@@ -1,7 +1,9 @@
-﻿using JWTExample.Contexts;
+﻿using JWTExample.Claims;
+using JWTExample.Contexts;
 using JWTExample.Models;
 using JWTExample.Policy;
 using JWTExample.Validators;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -76,9 +78,12 @@ namespace JWTExample.Extensions
 
         public static void AddAuthorizationExtension(this IServiceCollection services)
         {
+            services.AddScoped<IClaimsTransformation, UserClaimProvider>();
             services.AddAuthorization(x =>
             {
                 x.AddPolicy("TimeControl", policy => policy.Requirements.Add(new TimeRequirement()));
+                x.AddPolicy("UserClaimNamePolicy", policy => policy.RequireClaim("username", "etartar"));
+                x.AddPolicy("UserClaimPositionPolicy", policy => policy.RequireClaim("pozisyon", "admin"));
             });
             services.AddSingleton<IAuthorizationHandler, TimeHandler>();
         }

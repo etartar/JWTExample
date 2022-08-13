@@ -27,5 +27,12 @@ namespace JWTExample.Controllers
         {
             return Ok("This Policy Secured Data is available only for Authenticated Users.");
         }
+
+        [HttpPost]
+        [Authorize(Policy = "UserClaimNamePolicy")]
+        public async Task<IActionResult> ClaimSecuredData()
+        {
+            return Ok("This Claim Secured Data is available only for Authenticated Users.");
+        }
     }
 }
