@@ -2,7 +2,7 @@
 
 namespace JWTExample.Models
 {
-    public class ApplicationRole : IdentityRole
+    public class ApplicationRole : IdentityRole<Guid>
     {
         public ApplicationRole()
         {

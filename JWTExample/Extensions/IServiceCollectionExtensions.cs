@@ -1,5 +1,6 @@
 ﻿using JWTExample.Contexts;
 using JWTExample.Models;
+using JWTExample.Validators;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -21,11 +22,14 @@ namespace JWTExample.Extensions
                 options.Password.RequireLowercase = false;
                 options.Password.RequireDigit = false;
                 options.User.RequireUniqueEmail = true;
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnoprstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ0123456789-._@+";
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.AllowedForNewUsers = false;
                 options.SignIn.RequireConfirmedEmail = true;
-                options.User.AllowedUserNameCharacters = "abcdefghijklmnoprstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ0123456789-._@+";
             })
+            .AddPasswordValidator<CustomPasswordValidation>()
+            .AddUserValidator<CustomUserValidation>()
+            .AddErrorDescriber<CustomIdentityErrorDescriber>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
         }

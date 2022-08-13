@@ -17,7 +17,8 @@ namespace JWTExample.Contexts
                 UserName = Authorization.DEFAULT_USERNAME,
                 Email = Authorization.DEFAULT_EMAIL,
                 EmailConfirmed = true,
-                PhoneNumberConfirmed = true
+                PhoneNumberConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString()
             };
 
             if (userManager.Users.All(u => u.Id != defaultUser.Id))
