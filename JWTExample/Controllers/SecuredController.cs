@@ -11,14 +11,21 @@ namespace JWTExample.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSecuredData()
         {
-            return Ok("This Secured Data is available only for Authenticated Users.");
+            return Ok("This Get Secured Data is available only for Authenticated Users.");
         }
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> PostSecuredData()
         {
-            return Ok("This Secured Data is available only for Authenticated Users.");
+            return Ok("This Post Secured Data is available only for Authenticated Users.");
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "TimeControl")]
+        public async Task<IActionResult> PolicySecuredData()
+        {
+            return Ok("This Policy Secured Data is available only for Authenticated Users.");
         }
     }
 }

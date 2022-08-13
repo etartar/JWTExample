@@ -1,8 +1,10 @@
 ﻿using JWTExample.Contexts;
 using JWTExample.Models;
+using JWTExample.Policy;
 using JWTExample.Validators;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -70,6 +72,15 @@ namespace JWTExample.Extensions
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Key"]))
                     };
                 });
+        }
+
+        public static void AddAuthorizationExtension(this IServiceCollection services)
+        {
+            services.AddAuthorization(x =>
+            {
+                x.AddPolicy("TimeControl", policy => policy.Requirements.Add(new TimeRequirement()));
+            });
+            services.AddSingleton<IAuthorizationHandler, TimeHandler>();
         }
     }
 }

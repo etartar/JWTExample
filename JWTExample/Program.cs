@@ -17,6 +17,7 @@ builder.Services.AddIdentityExtension();
 //builder.Services.AddConfigureApplicationCookieExtension();
 //builder.Services.AddSession();
 builder.Services.AddAddAuthenticationExtension(builder.Configuration);
+builder.Services.AddAuthorizationExtension();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(swagger =>
