@@ -1,6 +1,7 @@
 ﻿using JWTExample.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -43,6 +44,27 @@ namespace JWTExample.Handlers
             tokenInstance.RefreshToken = CreateRefreshToken();
 
             return tokenInstance;
+        }
+
+        public string CreateToken(User user)
+        {
+            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:SecurityKey"]));
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            var descriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.Name),
+                    new Claim(ClaimTypes.Role, "Admin")
+                }),
+                Issuer = Configuration["Token:Issuer"],
+                Audience = Configuration["Token:Audience"],
+                Expires = DateTime.Now.AddMinutes(Convert.ToInt32(Configuration["Token:DurationInMinutes"])),
+                SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256),
+                NotBefore = DateTime.Now
+            };
+            var token = tokenHandler.CreateToken(descriptor);
+            return tokenHandler.WriteToken(token);
         }
 
         public string CreateRefreshToken()
