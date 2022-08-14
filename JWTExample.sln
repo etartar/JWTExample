@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JWTExample", "JWTExample\JWTExample.csproj", "{4A987BDC-16F0-4A03-9ED4-454D3CE524FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JWTIdentityExample", "JWTIdentityExample\JWTIdentityExample.csproj", "{4A987BDC-16F0-4A03-9ED4-454D3CE524FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
